@@ -1,0 +1,12 @@
+DB_SERVER=localhost
+DB_NAME=ProjetoPratico
+DB_USER=sa
+DB_PORT=1433
+DB_PASSWORD=D3v5fs4df4fs0123
+DB_DRIVER=ODBC Driver 17 for SQL Server
+
+
+SMTP_SERVER = smtp.gmail.com
+SMTP_PORT = 587
+SMTP_USERNAME = seu_email@gmail.com
+SMTP_PASSWORD = P55pjNGU7WJp

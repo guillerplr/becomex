@@ -1,0 +1,86 @@
+>>> run main.py
+
+    start_global = time.time() <-- marca o início da run >
+
+    async run main() <-- função de main.py >
+    (
+        conn = conectar_banco() <-- função de database.py >
+        (
+            <-- conecta ao banco, conn é uma instancia de pyodbc.connect() >
+            - se falhar aborta e printa;
+        )
+
+        links = await get_links() <-- função de main.py >
+        (
+            <-- acessa o diretório da receita federal em um mês específico e busca todos os links lá >
+        )
+
+        loop em links: baixar_arquivo() <-- função de download.py >
+        (
+            <-- baixa um arquivo em chunks de 1024 e salva na pasta downloads >
+            <-- usa a função verificar_zip em utils.py com a biblioteca zipfile pra check integridade >
+        )
+
+        resultados = lista com metadados de download de cada arquivo
+
+        loop em resultados: salvar_no_sql() <-- função de database.py >
+        (
+            <-- checa se o mes e nome do arquivo existem em TabLinks >
+            <-- se existe == 0, insere os VALUES do arquivo em TabLinks >
+            <-- VALUES: (mes, nome_arquivo, link, tamanho_arquivo_bytes, tempo_download) >
+        )
+    )
+
+    processar_arquivos() <-- função de manipula_arquivo.py >
+    (
+        <-- abre conexão com o banco e chama DescompactadorArquivos >
+        DescompactadorArquivos().descompactar_todos() <-- objeto de extractor.py >
+        (   
+            arquivos = listar_arquivos_baixados() <-- função de database.py >
+            
+            loop arquivos:
+                <-- cria o caminho extraidos/ se ainda não existir >
+                <-- extrai os arquivos em downloads/ e os deleta >
+                <-- salva os arquivos extraidos em extraidos/ >
+
+                gravar_extracao() <-- função de database.py >
+                (
+                    <-- atualiza as entradas em TabLinks informando metadados de extração >
+                )
+
+                <-- se der algum erro, grava em TabLinks com status de erro >
+        )
+        <-- fecha conexão >
+    )
+
+    <-- abre conexão novamente >
+    inserir_dados_banco() <-- função de manipula_arquivo.py >
+    (
+        recuperar_mapeamento_das_tabelas() <-- função de manipula_arquivo.py >
+        (
+            arquivos = listar_arquivos_extraidos_sucesso() <-- função de database.py >
+            (
+                <-- acessa TabLinks e pega as linhas com status_extracao = "sucesso" >
+            )
+            <-- associa cada arquivo csv que precisa ser inserido no db com o mapeamento em mapeamento_json.py >
+        )
+        <-- confere numero de colunas em cada arquivo antes de prosseguir >
+        <-- filtra os arquivos por CNPJ, inserindo apenas os CNPJs associados aos CNAEs desejados >
+        <-- usa o ParallelInserter para inserir os dados no bd >
+
+    )
+    <-- fecha conexão >
+
+    realiza_transformacao_dados <-- função de transforma_dados.py >
+    (
+        chamar_procedure_transform_data() <-- função de database.py >
+        (
+            <-- aciona a dbo.proc_TransformacaoDados.sql >
+            (
+                <-- pega as tabelas _Arquivo com os dados brutos, trata elas e salva em uma unica tabela TabEstabelecimentos >
+                <-- também atualiza a situacao cadastral se houverem mudanças >
+            )
+        )
+    )
+
+    enviar_notificacao() <-- função de notificacao.py >
