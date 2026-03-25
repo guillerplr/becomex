@@ -1,16 +1,34 @@
 # 📦 Projeto (projetocbx)
 
-Repositório contém projetos desenvolvidos para atender demandas práticas da DNC
+Pipeline de Dados e API para Monitoramento de Empresas (CNPJ)
 
 ---
 
-## ⚙️ Pré-requisitos
+# 📔 Descrição do Projeto
+
+Desenvolvimento de um pipeline de dados completo (ETL) para coleta, processamento e disponibilização de dados públicos de empresas a partir da base da Receita Federal.
+
+O sistema realiza a extração de grandes volumes de dados (milhões de registros), aplica filtros por CNAE para segmentação de mercado e integra múltiplas tabelas relacionais utilizando o CNPJ como chave principal.
+
+Após o processamento, os dados são disponibilizados por meio de uma API REST autenticada (JWT), permitindo consulta de empresas, busca por CNPJ e integração direta com sistemas externos.
+
+## 🔧 Funcionalidades
+
+- Extração automatizada de dados públicos (Receita Federal)
+- Transformação e padronização de dados
+- Integração de múltiplas tabelas (Empresas, Sócios, CNAE, etc.)
+- Filtro inteligente por CNAE
+- Disponibilização via API REST
+
+---
+# ⚙️ Configuração
+
+## 📌 Pré-requisitos
 
 - **Python 3.10+**
 - **Docker instalado e funcionando**
 - **Git instalado**
 
----
 ## 🧪 1. Subindo o SQL Server com Docker
 
 O projeto depende de uma instância SQL Server. Use o comando abaixo para baixar a imagem e subir o container:
@@ -52,16 +70,5 @@ Renomeie arquivo chamado  `env` para `.env` na raiz do projeto e adicione suas c
 SMTP_SERVER = smtp.gmail.com
 SMTP_PORT = 587
 SMTP_USERNAME = seu_email@gmail.com
-SMTP_PASSWORD = P55pjNGU7WJp
+SMTP_PASSWORD = 'senha'
 ```
-
-### 🚀 Como clonar o repositório privado
-
-Após aceitar o convite, o colaborador pode clonar o repositório normalmente:
-
-```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
-```
-
-
-
