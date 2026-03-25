@@ -1,66 +1,88 @@
 # 📦 Projeto (projetocbx)
 
-Pipeline de Dados e API para Monitoramento de Empresas (CNPJ)
+Pipeline de Dados e API para Monitoramento de Empresas (CNPJ
 
 ---
 
-# 📔 Descrição do Projeto
+## 📌 Visão Geral
 
-Desenvolvimento de um pipeline de dados completo (ETL) para coleta, processamento e disponibilização de dados públicos de empresas a partir da base da Receita Federal.
+Pipeline de dados desenvolvido para coletar, processar e disponibilizar dados públicos de empresas a partir da base da Receita Federal.
 
-O sistema realiza a extração de grandes volumes de dados (milhões de registros), aplica filtros por CNAE para segmentação de mercado e integra múltiplas tabelas relacionais utilizando o CNPJ como chave principal.
-
-Após o processamento, os dados são disponibilizados por meio de uma API REST autenticada (JWT), permitindo consulta de empresas, busca por CNPJ e integração direta com sistemas externos.
+A solução automatiza a identificação de empresas relevantes por segmento (CNAE) e disponibiliza os dados via API para consumo por sistemas externos.
 
 ## 🎯 Problema
 
 Empresas que dependem de dados atualizados de mercado precisam lidar com:
 
-bases públicas extremamente grandes (milhões de registros)
-dados fragmentados em múltiplas tabelas
-dificuldade de identificar empresas relevantes rapidamente
+- Bases públicas extremamente grandes (milhões de registros)  
+- Dados fragmentados em múltiplas tabelas  
+- Dificuldade de identificar empresas relevantes rapidamente  
 
 ## 💡 Solução
 
 Desenvolvimento de um pipeline ETL que:
 
-realiza download automatizado da base pública de CNPJs
-filtra empresas por CNAE (segmentação de mercado)
-integra múltiplas fontes de dados (empresas, sócios, CNAE, etc.)
-disponibiliza os dados através de API REST com autenticação
+- Realiza download automatizado da base pública de CNPJs  
+- Filtra empresas por CNAE (segmentação de mercado)  
+- Integra múltiplas fontes de dados (empresas, sócios, CNAE, etc.)  
+- Disponibiliza os dados através de API REST com autenticação  
 
 ## 🏗️ Arquitetura
 
 ETL dividido em 3 etapas:
 
-Extract: Download dos dados públicos da Receita Federal
-Transform: Limpeza, padronização e integração das tabelas
-Load: Armazenamento em banco SQL Server e exposição via API
+- **Extract:** download dos dados públicos da Receita Federal  
+- **Transform:** limpeza, padronização e integração das tabelas  
+- **Load:** armazenamento em SQL Server e exposição via API  
 
 ## ⚙️ Tecnologias Utilizadas
-Python
-SQL Server
-APIs REST
-JWT (autenticação)
-Docker
+
+- Python  
+- SQL Server  
+- APIs REST  
+- JWT (autenticação)  
+- Docker  
 
 ## 🚀 Funcionalidades
-Listagem de empresas
-Busca por CNPJ
-Filtro por data de atividade
-Integração com sistemas externos via API
-Autenticação com JWT
+
+- Listagem de empresas  
+- Busca por CNPJ  
+- Filtro por data de atividade  
+- Integração com sistemas externos via API  
+- Autenticação com JWT  
+
+## 📡 Exemplo de Resposta
+
+```json
+{
+  "cnpj": "12345678901234",
+  "razaoSocial": "Empresa Exemplo LTDA",
+  "municipio": "São Paulo",
+  "cnaePrincipal": "6201500"
+}
+```
 
 ## ⚠️ Desafios Técnicos
-Processamento de bases com dezenas de milhões de registros
-Otimização de performance através de filtragem por CNAE
-Integração eficiente de múltiplas tabelas relacionais
+- Processamento de bases com dezenas de milhões de registros
+- Otimização de performance com filtragem por CNAE
+- Integração eficiente de múltiplas tabelas relacionais
 
 ## 📈 Resultado
-Automação completa do processo de coleta e análise de dados
-Redução de trabalho manual
-Disponibilização de dados estruturados prontos para consumo
+- Automação completa do processo de coleta e análise de dados
+- Redução de trabalho manual
+- Dados estruturados prontos para consumo
 
+
+▶️ Como rodar rapidamente
+
+```git clone <repo>
+cd cnpj-data-pipeline-api
+
+docker run -e "ACCEPT_EULA=Y" --name db_bcx -e "MSSQL_SA_PASSWORD=SuaSenha" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
+
+pip install -r requirements.txt
+python main.py
+```
 ---
 # ⚙️ Configuração
 
