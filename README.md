@@ -12,13 +12,54 @@ O sistema realiza a extração de grandes volumes de dados (milhões de registro
 
 Após o processamento, os dados são disponibilizados por meio de uma API REST autenticada (JWT), permitindo consulta de empresas, busca por CNPJ e integração direta com sistemas externos.
 
-## 🔧 Funcionalidades
+## 🎯 Problema
 
-- Extração automatizada de dados públicos (Receita Federal)
-- Transformação e padronização de dados
-- Integração de múltiplas tabelas (Empresas, Sócios, CNAE, etc.)
-- Filtro inteligente por CNAE
-- Disponibilização via API REST
+Empresas que dependem de dados atualizados de mercado precisam lidar com:
+
+bases públicas extremamente grandes (milhões de registros)
+dados fragmentados em múltiplas tabelas
+dificuldade de identificar empresas relevantes rapidamente
+
+## 💡 Solução
+
+Desenvolvimento de um pipeline ETL que:
+
+realiza download automatizado da base pública de CNPJs
+filtra empresas por CNAE (segmentação de mercado)
+integra múltiplas fontes de dados (empresas, sócios, CNAE, etc.)
+disponibiliza os dados através de API REST com autenticação
+
+## 🏗️ Arquitetura
+
+ETL dividido em 3 etapas:
+
+Extract: Download dos dados públicos da Receita Federal
+Transform: Limpeza, padronização e integração das tabelas
+Load: Armazenamento em banco SQL Server e exposição via API
+
+## ⚙️ Tecnologias Utilizadas
+Python
+SQL Server
+APIs REST
+JWT (autenticação)
+Docker
+
+## 🚀 Funcionalidades
+Listagem de empresas
+Busca por CNPJ
+Filtro por data de atividade
+Integração com sistemas externos via API
+Autenticação com JWT
+
+## ⚠️ Desafios Técnicos
+Processamento de bases com dezenas de milhões de registros
+Otimização de performance através de filtragem por CNAE
+Integração eficiente de múltiplas tabelas relacionais
+
+## 📈 Resultado
+Automação completa do processo de coleta e análise de dados
+Redução de trabalho manual
+Disponibilização de dados estruturados prontos para consumo
 
 ---
 # ⚙️ Configuração
